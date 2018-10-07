@@ -13,9 +13,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h2>{this.state.pass ? 'Pass' : 'Fail'}</h2><h3>Grade AA</h3>
-        <ColourInput target='background'/>
-        <ColourInput target='text'/>
+        <div className='results'>
+          <span className='result'>{this.state.pass ? 'Pass' : 'Fail'}</span>
+          <span className='ratio'>7:7:1</span>
+          <span className='grade'>AA</span>
+        </div>
+        <ColourInput target='background' initialHue={0} initialSaturation={50} initialBrightness={0}/>
+        <ColourInput target='text' initialHue={0} initialSaturation={50} initialBrightness={100}/>
       </div>
     );
   }

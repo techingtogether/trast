@@ -2,37 +2,41 @@ import React, { Component } from 'react';
 
 export default class ColourInput extends Component {
 
-    constructor() {
+    constructor(props) {
         super();
         this.changeHSL = this.changeHSL.bind(this)
         this.state = {
-            hue: 0,
-            saturation: 0,
-            brightness: 0,
+            hue: props.initialHue,
+            saturation: props.initialSaturation,
+            brightness: props.initialBrightness,
             hex: '#ABCDEF'
         }
+
+        const stylesheet = document.documentElement.style;
+        stylesheet.setProperty(`--${props.target}_hue`, props.initialHue);
+        stylesheet.setProperty(`--${props.target}_saturation`, `${props.initialSaturation}%`);
+        stylesheet.setProperty(`--${props.target}_brightness`, `${props.initialBrightness}%`);
     }
+
 
     render() {
         return (
         <div className="color-input">
             <h4>{this.props.target}</h4>
             <h3>{this.state.hex}</h3>
-            <div class='control'>
-                <label class='property'>Hue</label>
-                <label class='value'>{this.state.hue}</label>
+            <div className='control'>
+                <label className='property'>Hue</label>
+                <label className='value'>{this.state.hue}</label>
                 <input id='hue' name='hue' type='range' min="0" max="360" value={this.state.hue} onChange={this.changeHSL}/>
             </div>
-            <div class='control'>
-                <div class='labels'>
-                    <label class='property'>Saturation</label>
-                    <label class='value'>{this.state.saturation}</label>
-                    <input id='saturation' name='saturation' type='range' min="0" max="100" value={this.state.saturation} onChange={this.changeHSL}/>
-                </div>
+            <div className='control'>
+                <label className='property'>Saturation</label>
+                <label className='value'>{this.state.saturation}</label>
+                <input id='saturation' name='saturation' type='range' min="0" max="100" value={this.state.saturation} onChange={this.changeHSL}/>
             </div>
-            <div class='control'>
-                <label class='property'>Brightness</label>
-                <label class='value'>{this.state.brightness}</label>
+            <div className='control'>
+                <label className='property'>Brightness</label>
+                <label className='value'>{this.state.brightness}</label>
                 <input id='brightness' name='brightness' type='range' min="0" max="100" value={this.state.brightness} onChange={this.changeHSL}/>
             </div>
         </div>
