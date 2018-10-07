@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ColourInput from './ColourInput';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>a11ydentifier</h1>
+        <h2>The quick brown fox jumps</h2>
+        <h2>Pass: Grade AA</h2>
+        <ColourInput target='Background'/>
+        <ColourInput target='Text'/>
       </div>
     );
   }
