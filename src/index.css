@@ -10,7 +10,6 @@ body {
 .App {
   background-color: hsl(var(--background_hue), var(--background_saturation), var(--background_brightness));
   color: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
-  height: 70vh;
   padding: 15vh 0px;
 }
 

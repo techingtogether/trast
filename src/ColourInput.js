@@ -9,7 +9,7 @@ export default class ColourInput extends Component {
             hue: props.initialHue,
             saturation: props.initialSaturation,
             brightness: props.initialBrightness,
-            hex: '#ABCDEF'
+            hex: this.hslToHex(props.initialHue, props.initialSaturation, props.initialBrightness)
         }
 
         const stylesheet = document.documentElement.style;
@@ -46,7 +46,7 @@ export default class ColourInput extends Component {
         let {value, id} = event.target;
         value *= 1;
 
-        const formattedValue = id !== 'hue' ?  `${value}%` : value;
+        const formattedValue = id !== 'hue' ? `${value}%` : value;
         const newState = {};
         newState[id] = value;
 
@@ -96,6 +96,12 @@ export default class ColourInput extends Component {
             return hex.length === 1 ? '0' + hex : hex;
           };
         return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    }
+
+    hslToHex(h, s, l) {
+        const rgb = this.hslToRgb(h, s, l);
+        const [r, g, b] = rgb;
+        return this.rgbToHex(r, g, b)
     }
 
 }

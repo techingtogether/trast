@@ -21,7 +21,8 @@ class App extends Component {
   }
 
   render() {
-    const contrast = this.state.contrast
+    const {contrast, pangram} = this.state;
+
     return (
       <div className="App">
         <div className='results'>
@@ -29,7 +30,7 @@ class App extends Component {
           <span className='ratio'>{`${contrast.toFixed(1)}:1`}</span>
           <span className='grade'>{contrast >= 7 ? 'AAA' : contrast >= 4.5 ? 'AA' : ''}</span>
         </div>
-        <div className='results'>{this.state.pangram}</div>
+        <div className='results'>{pangram}</div>
         <ColourInput target='background' initialHue={0} initialSaturation={50} initialBrightness={0} onColorChange={this.onBackgroundColorChange}/>
         <ColourInput target='text' initialHue={0} initialSaturation={50} initialBrightness={100} onColorChange={this.onTextColorChange}/>
       </div>
