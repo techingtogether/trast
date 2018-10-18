@@ -54,13 +54,16 @@ export default class ColourInput extends Component {
         const saturation = id === 'saturation' ? value : this.state.saturation;
         const brightness = id === 'brightness' ? value : this.state.brightness;
 
-        newState.hex = this.hslToHex(hue, saturation, brightness);
+        const [r, g, b] = this.hslToRgb(hue, saturation, brightness);
 
+        const hex = this.rgbToHex(r, g, b);
+        this.props.onColorChange(r, g, b);
+        newState.hex = hex;
         this.setState(newState);
         document.documentElement.style.setProperty(`--${this.props.target}_${id}`, formattedValue);
     }
 
-    hslToHex(h, s, l) {
+    hslToRgb(h, s, l) {
         h /= 360;
         s /= 100;
         l /= 100;
@@ -83,11 +86,16 @@ export default class ColourInput extends Component {
           g = hue2rgb(p, q, h);
           b = hue2rgb(p, q, h - 1 / 3);
         }
+        return [r, g, b];
+        
+    }
+
+    rgbToHex(r, g, b) {
         const toHex = x => {
-          const hex = Math.round(x * 255).toString(16);
-          return hex.length === 1 ? '0' + hex : hex;
-        };
+            const hex = Math.round(x * 255).toString(16);
+            return hex.length === 1 ? '0' + hex : hex;
+          };
         return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-      }
+    }
 
 }
