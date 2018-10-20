@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {hslToRgb, rgbToHex, hslToHex} from './ColourUtils.js';
 
 export default class ColourInput extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class ColourInput extends Component {
       hue: props.initialHue,
       saturation: props.initialSaturation,
       brightness: props.initialBrightness,
-      hex: this.hslToHex(
+      hex: hslToHex(
         props.initialHue,
         props.initialSaturation,
         props.initialBrightness
@@ -30,10 +31,12 @@ export default class ColourInput extends Component {
   render() {
     return (
       <div className="color-input">
-        <h4>{this.props.target}</h4>
-        <h3 onClick={() => navigator.clipboard.writeText(this.state.hex)}>
-          {this.state.hex}
-        </h3>
+        <div className="thingy">
+            <span class="selector-name">{this.props.target}</span>
+            <button onClick={() => navigator.clipboard.writeText(this.state.hex)}>
+            {this.state.hex}
+            </button>
+        </div>
         <div className="control">
           <label className="property">Hue</label>
           <label className="value">{this.state.hue}</label>
@@ -89,9 +92,9 @@ export default class ColourInput extends Component {
     const saturation = id === "saturation" ? value : this.state.saturation;
     const brightness = id === "brightness" ? value : this.state.brightness;
 
-    const [r, g, b] = this.hslToRgb(hue, saturation, brightness);
+    const [r, g, b] = hslToRgb(hue, saturation, brightness);
 
-    const hex = this.rgbToHex(r, g, b);
+    const hex = rgbToHex(r, g, b);
     this.props.onColorChange(r, g, b);
     newState.hex = hex;
     this.setState(newState);
@@ -99,44 +102,5 @@ export default class ColourInput extends Component {
       `--${this.props.target}_${id}`,
       formattedValue
     );
-  }
-
-  hslToRgb(h, s, l) {
-    h /= 360;
-    s /= 100;
-    l /= 100;
-    let r, g, b;
-    if (s === 0) {
-      r = g = b = l; // achromatic
-    } else {
-      const hue2rgb = (p, q, t) => {
-        if (t < 0) t += 1;
-        if (t > 1) t -= 1;
-        if (t < 1 / 6) return p + (q - p) * 6 * t;
-        if (t < 1 / 2) return q;
-        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-        return p;
-      };
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      const p = 2 * l - q;
-      r = hue2rgb(p, q, h + 1 / 3);
-      g = hue2rgb(p, q, h);
-      b = hue2rgb(p, q, h - 1 / 3);
-    }
-    return [r, g, b];
-  }
-
-  rgbToHex(r, g, b) {
-    const toHex = x => {
-      const hex = Math.round(x * 255).toString(16);
-      return hex.length === 1 ? "0" + hex : hex;
-    };
-    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-  }
-
-  hslToHex(h, s, l) {
-    const rgb = this.hslToRgb(h, s, l);
-    const [r, g, b] = rgb;
-    return this.rgbToHex(r, g, b);
   }
 }

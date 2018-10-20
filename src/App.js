@@ -32,33 +32,36 @@ class App extends Component {
           </span>
         </div>
         <div className="results">{pangram}</div>
-        <ColourInput
-          target="background"
-          initialHue={0}
-          initialSaturation={50}
-          initialBrightness={0}
-          onColorChange={this.onBackgroundColorChange}
-        />
-        <ColourInput
-          target="text"
-          initialHue={0}
-          initialSaturation={50}
-          initialBrightness={100}
-          onColorChange={this.onTextColorChange}
-        />
+        <div className="color-inputs">
+          <ColourInput
+            target="background"
+            initialHue={0}
+            initialSaturation={50}
+            initialBrightness={0}
+            onColorChange={this.onBackgroundColorChange}
+          />
+          <ColourInput
+            target="text"
+            initialHue={0}
+            initialSaturation={50}
+            initialBrightness={100}
+            onColorChange={this.onTextColorChange}
+          />
+        </div>
         <div className="footer">
-          Made with ♥ by <a href="https://www.zahratraboulsi.com">Zahra</a> and{" "}
-          <a href="https://syeefkarim.com">Syeef</a>
+          Made with ♥ by <a href="https://www.zahratraboulsi.com">Zahra</a> and <a href="https://syeefkarim.com">Syeef</a>
         </div>
       </div>
     );
   }
 
   contrast(rgb1, rgb2) {
-    return (
-      (this.luminance(rgb1[0], rgb1[1], rgb1[2]) + 0.05) /
-      (this.luminance(rgb2[0], rgb2[1], rgb2[2]) + 0.05)
-    );
+    const luminance1 = this.luminance(rgb1[0], rgb1[1], rgb1[2]);
+    const luminance2 = this.luminance(rgb2[0], rgb2[1], rgb2[2]);
+    const lighter = Math.max(luminance1, luminance2);
+    const darker = Math.min(luminance1, luminance2);
+    
+    return (lighter + 0.05) / (darker + 0.05);
   }
 
   onColorChange(rgb1, rgb2) {
