@@ -99,6 +99,7 @@ a {
 
 .color-input {
   margin: 10px var(--left-margin);
+  flex: 1;
 }
 
 .control-header {

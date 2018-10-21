@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ColourInput from "./ColourInput";
+import ColorInput from "./ColorInput";
 
 class App extends Component {
   constructor() {
@@ -41,14 +41,14 @@ class App extends Component {
         </div>
         <div className="info">{pangram}</div>
         <div className="color-inputs">
-          <ColourInput
+          <ColorInput
             target="background"
             initialHue={0}
             initialSaturation={50}
             initialBrightness={0}
             onColorChange={this.onBackgroundColorChange}
           />
-          <ColourInput
+          <ColorInput
             target="text"
             initialHue={0}
             initialSaturation={50}
