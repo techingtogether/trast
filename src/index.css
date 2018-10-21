@@ -1,7 +1,28 @@
 :root {
   --left-margin: 20px;
+  --text-color: hsl(
+    var(--text_hue),
+    var(--text_saturation),
+    var(--text_brightness)
+  );
+  --bg-color: hsl(
+    var(--background_hue),
+    var(--background_saturation),
+    var(--background_brightness)
+  );
+  --text-color-10: hsla(
+    var(--text_hue),
+    var(--text_saturation),
+    var(--text_brightness),
+    0.1
+  );
+  --text-color-30: hsla(
+    var(--text_hue),
+    var(--text_saturation),
+    var(--text_brightness),
+    0.3
+  );
 }
-
 
 * {
   box-sizing: border-box;
@@ -10,164 +31,179 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  color: var(--text-color);
+}
+
 .App {
-  background-color: hsl(var(--background_hue), var(--background_saturation), var(--background_brightness));
-  color: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
+  background-color: var(--bg-color);
+  color: var(--text-color);
   padding: 15vh 10vw;
   min-height: 100vh;
 }
 
-.results {
-  text-align: left;
+/* Logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 45px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+#icon {
+  margin-right: 10px;
+  height: 1em;
+  width: 1em;
+}
+
+#half1 {
+  fill: var(--text-color-30);
+}
+
+#half2 {
+  fill: var(--text-color);
+}
+
+/* Contrast information */
+
+.info {
   margin: 0px var(--left-margin);
+}
+
+.info * {
+  margin-right: 10px;
 }
 
 .result {
   font-size: 2em;
   font-weight: 600;
-  margin-right: 10px;
 }
 
-.grade, .ratio {
+.grade,
+.ratio {
   font-size: 1.5em;
-  margin-right: 10px;
-}
-
-.control {
-  flex-direction: row;
-  margin: 5px;
-  
-}
-
-.control.labels {
-  flex-direction: column;
 }
 
 .color-inputs {
   display: flex;
-  flex-direction: row;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .color-input {
-  flex: 1;
-
   margin: 10px var(--left-margin);
 }
 
-.thingy {
+.control-header {
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
+.control {
+  margin: 5px;
+}
 
-
-label, input {
+.control label {
   display: inline-block;
   width: 50%;
-  margin-bottom: 10px;
 }
 
-label.property {
-  text-align: left;
-}
-
-label.value {
+.control label.value {
   text-align: right;
 }
 
-input {
+.control input[type="range"] {
   width: 100%;
+  margin: 5px 0px 15px;
 }
 
-h2, h3, h4, button, .selector-name {
-  text-align: left;
+.control input[type="range"]::-moz-range-track {
+  background: var(--text-color);
 }
 
-.selector-name {
+.control input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  background: var(--text-color);
+  border-radius: 10px;
+  box-shadow: rgba(100, 100, 100, 0.5) 1px 1px 1px;
+}
+
+.control input[type="range"]::-webkit-slider-thumb {
+  margin-top: -4px;
+}
+
+.control-header .selector-name {
   text-transform: capitalize;
-  margin-top: 5px;
   font-weight: 600;
 }
 
-button {
+.control-header button.hex {
   text-transform: uppercase;
 }
 
-button {
-  background: transparent;
-  color: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
-  padding: 5px 10px;
-  font-size: 1em;
-  position: relative;
-  left: 0;
-  border-radius: 5px;
+.control-header button.hex {
+  color: var(--text-color);
+  font-size: 0.75em;
   border-color: transparent;
-  background-color: hsla(var(--text_hue), var(--text_saturation), var(--text_brightness), 0.1);
-  border-width: 1px;
+  border-radius: 5px;
+  background-color: var(--text-color-10);
 }
 
-button:hover {
-  background-color: hsla(var(--text_hue), var(--text_saturation), var(--text_brightness), 0.2);
+.control-header button.hex:hover {
+  background-color: hsla(
+    var(--text_hue),
+    var(--text_saturation),
+    var(--text_brightness),
+    0.2
+  );
 }
 
-button:active {
-  background-color: hsla(var(--text_hue), var(--text_saturation), var(--text_brightness), 0.3)
+.control-header button.hex:active {
+  background-color: var(--text-color-30);
 }
 
-button:focus {
-  border-color: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
+.control-header button.hex:focus {
+  border-color: var(--text-color);
   border-width: 1px;
   outline: 0;
   border-style: solid;
 }
 
 .footer {
-  background: hsla(var(--text_hue), var(--text_saturation), var(--text_brightness), 0.1);
+  background: var(--text-color-10);
   bottom: 0px;
-  left: 0px;
-  color: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
+  color: var(--text-color);
   font-size: 0.75em;
   font-weight: 600;
+  left: 0px;
   letter-spacing: 0.1em;
   padding: 10px;
   position: fixed;
+  text-align: center;
   text-transform: uppercase;
   width: 100vw;
-}
-
-a {
-  color: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
 }
 
 @media (max-width: 600px) {
   .App {
     padding: 10vw;
   }
+  .logo {
+    margin-bottom: 20px;
+  }
+  .color-input label {
+    margin-bottom: 0px;
+  }
   .color-inputs {
+    margin-top: 20px;
     flex-direction: column;
   }
-}
-
-input[type=range]::-moz-range-track {
-  background: hsl(var(--text_hue), var(--text_saturation), var(--text_brightness));
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-  height: 5px;
-  background: lightgrey;
-  border-radius: 3px;
-  box-shadow: rgba(100, 100, 100, 0.5) 1px 1px 1px;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  margin-top: -4px;
 }

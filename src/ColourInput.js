@@ -31,15 +31,15 @@ export default class ColourInput extends Component {
   render() {
     return (
       <div className="color-input">
-        <div className="thingy">
+        <div className="control-header">
             <span class="selector-name">{this.props.target}</span>
-            <button onClick={() => navigator.clipboard.writeText(this.state.hex)}>
+            <button className="hex" onClick={() => navigator.clipboard.writeText(this.state.hex)}>
             {this.state.hex}
             </button>
         </div>
         <div className="control">
           <label className="property">Hue</label>
-          <label className="value">{this.state.hue}</label>
+          <label className="value">{`${this.state.hue}°`}</label>
           <input
             id="hue"
             name="hue"
