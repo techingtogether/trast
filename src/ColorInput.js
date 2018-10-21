@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {hslToRgb, rgbToHex, hslToHex} from './ColorUtils.js';
+import { hslToRgb, rgbToHex, hslToHex } from './ColorUtils.js';
 
 export default class ColorInput extends Component {
   constructor(props) {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ColorInput from "./ColorInput";
+import { calculateContrast } from "./ColorUtils.js";
 
 class App extends Component {
   constructor() {
@@ -12,8 +13,6 @@ class App extends Component {
       pangram: this.getRandomPangram()
     };
 
-    this.contrast = this.contrast.bind(this);
-    this.luminance = this.luminance.bind(this);
     this.onColorChange = this.onColorChange.bind(this);
     this.onBackgroundColorChange = this.onBackgroundColorChange.bind(this);
     this.onTextColorChange = this.onTextColorChange.bind(this);
@@ -25,19 +24,33 @@ class App extends Component {
       <div className="App">
         <div className="info">
           <div className="logo">
-            <svg version="1.1" id="icon" x="0px" y="0px" width="0px" height="0px" viewBox="0 0 32 32" enable-background="new 0 0 32 32">
-              <path id="half1" fill="#FFFFFF" d="M27.335,4.708c6.249,6.249,6.248,16.379,0,22.627c-6.249,6.249-16.378,6.249-22.627,0.001"/>
-              <path id="half2" d="M27.335,4.708c-6.364-6.364-16.379-6.249-22.627,0c-6.248,6.249-6.363,16.263,0,22.628L27.335,4.708z"/>
+            <svg
+              version="1.1"
+              id="icon"
+              x="0px"
+              y="0px"
+              width="0px"
+              height="0px"
+              viewBox="0 0 32 32"
+              enable-background="new 0 0 32 32"
+            >
+              <path
+                id="half1"
+                fill="#FFFFFF"
+                d="M27.335,4.708c6.249,6.249,6.248,16.379,0,22.627c-6.249,6.249-16.378,6.249-22.627,0.001"
+              />
+              <path
+                id="half2"
+                d="M27.335,4.708c-6.364-6.364-16.379-6.249-22.627,0c-6.248,6.249-6.363,16.263,0,22.628L27.335,4.708z"
+              />
             </svg>
             TRAST
           </div>
         </div>
         <div className="info">
-          <span className="result">{contrast >= 4.5 ? "Pass" : "Fail"}</span>
-          <span className="ratio">{`${contrast.toFixed(1)}:1`}</span>
-          <span className="grade">
-            {contrast >= 7 ? "AAA" : contrast >= 4.5 ? "AA" : ""}
-          </span>
+          <span className="result">{contrast >= 3 ? "Pass" : "Fail"}</span>
+          <span className="ratio">{this.stringifyContrast(contrast)}</span>
+          <span className="grade">{this.resultForContrast(contrast)}</span>
         </div>
         <div className="info">{pangram}</div>
         <div className="color-inputs">
@@ -57,23 +70,33 @@ class App extends Component {
           />
         </div>
         <div className="footer">
-          Made with ♥ by <a href="https://www.zahratraboulsi.com" target="_blank">Zahra</a> and <a href="https://syeefkarim.com" target="_blank">Syeef</a>
+          Made with ♥ by <a href="https://www.zahratraboulsi.com">Zahra</a> and{" "}
+          <a href="https://syeefkarim.com">Syeef</a>
         </div>
       </div>
     );
   }
 
-  contrast(rgb1, rgb2) {
-    const luminance1 = this.luminance(rgb1[0], rgb1[1], rgb1[2]);
-    const luminance2 = this.luminance(rgb2[0], rgb2[1], rgb2[2]);
-    const lighter = Math.max(luminance1, luminance2);
-    const darker = Math.min(luminance1, luminance2);
-    
-    return (lighter + 0.05) / (darker + 0.05);
+  stringifyContrast(contrast) {
+    const contrastString = contrast.toFixed(1);
+    if (contrastString.endsWith("0")) {
+      return `${contrastString.slice(0, -2)}:1`;
+    }
+    return `${contrastString}:1`;
+  }
+
+  resultForContrast(contrast) {
+    if (contrast >= 7) {
+      return "AAA";
+    } else if (contrast >= 4.5) {
+      return "AA";
+    } else if (contrast >= 3) {
+      return "AA Large";
+    }
   }
 
   onColorChange(rgb1, rgb2) {
-    const contrast = this.contrast(rgb1, rgb2);
+    const contrast = calculateContrast(rgb1, rgb2);
     this.setState({ contrast: contrast });
   }
 
@@ -85,13 +108,6 @@ class App extends Component {
   onTextColorChange(r, g, b) {
     this.setState({ rgbText: [r, g, b] });
     this.onColorChange([r, g, b], this.state.rgbBackground);
-  }
-
-  luminance(r, g, b) {
-    const a = [r, g, b].map(v => {
-      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-    });
-    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
   }
 
   getRandomPangram() {
