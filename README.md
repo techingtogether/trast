@@ -1,6 +1,8 @@
 # Trast
 ## An interactive playground for picking color combinations 🎨
 
+![A screenshot of Trast in action!](./screenshot.png)
+
 ### Running in development
 * Clone the repo: `git clone https://github.com/ZahraTee/trast.git`
 * Open the directory: `cd trast`
