@@ -7,8 +7,8 @@ class App extends Component {
     super();
 
     this.state = {
-      rgbText: [1, 1, 1],
-      rgbBackground: [0, 0, 0],
+      hslText: [0, 50, 100],
+      hslBackground: [0, 0, 0],
       contrast: 21,
       pangram: this.getRandomPangram()
     };
@@ -95,19 +95,19 @@ class App extends Component {
     }
   }
 
-  onColorChange(rgb1, rgb2) {
-    const contrast = calculateContrast(rgb1, rgb2);
+  onColorChange(hsl1, hsl2) {
+    const contrast = calculateContrast(hsl1, hsl2);
     this.setState({ contrast: contrast });
   }
 
-  onBackgroundColorChange(r, g, b) {
-    this.setState({ rgbBackground: [r, g, b] });
-    this.onColorChange(this.state.rgbText, [r, g, b]);
+  onBackgroundColorChange(h, s, l) {
+    this.setState({ hslBackground: [h, s, l] });
+    this.onColorChange(this.state.hslText, [h, s, l]);
   }
 
-  onTextColorChange(r, g, b) {
-    this.setState({ rgbText: [r, g, b] });
-    this.onColorChange([r, g, b], this.state.rgbBackground);
+  onTextColorChange(h, s, l) {
+    this.setState({ hslText: [h, s, l] });
+    this.onColorChange([h, s, l], this.state.hslBackground);
   }
 
   getRandomPangram() {

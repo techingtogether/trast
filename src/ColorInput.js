@@ -82,7 +82,7 @@ export default class ColorInput extends Component {
 
   changeHSL(event) {
     let { value, id } = event.target;
-    value *= 1;
+    value = Number(value);
 
     const formattedValue = id !== "hue" ? `${value}%` : value;
     const newState = {};
@@ -94,10 +94,10 @@ export default class ColorInput extends Component {
 
     const [r, g, b] = hslToRgb(hue, saturation, brightness);
 
-    const hex = rgbToHex(r, g, b);
-    this.props.onColorChange(r, g, b);
-    newState.hex = hex;
+    newState.hex = rgbToHex(r, g, b);
     this.setState(newState);
+    this.props.onColorChange(hue, saturation, brightness);
+
     document.documentElement.style.setProperty(
       `--${this.props.target}_${id}`,
       formattedValue

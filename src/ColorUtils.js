@@ -1,4 +1,7 @@
-export function calculateContrast(rgb1, rgb2) {
+export function calculateContrast(hsl1, hsl2) {
+  const rgb1 = hslToRgb(hsl1[0], hsl1[1], hsl1[2]);
+  const rgb2 = hslToRgb(hsl2[0], hsl2[1], hsl2[2]);
+
   const luminance1 = calculateLuminance(rgb1[0], rgb1[1], rgb1[2]);
   const luminance2 = calculateLuminance(rgb2[0], rgb2[1], rgb2[2]);
   const lighter = Math.max(luminance1, luminance2);
