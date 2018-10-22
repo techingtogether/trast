@@ -1,5 +1,5 @@
 # Trast
-## An interactive playground for picking color combinations 🎨
+An interactive playground for picking color combinations 🎨
 
 ![A screenshot of Trast in action!](./screenshot.png)
 
