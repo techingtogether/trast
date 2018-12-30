@@ -5,6 +5,7 @@ export default class ColorInput extends Component {
   constructor(props) {
     super();
     this.changeHSL = this.changeHSL.bind(this);
+    this.copyHexToClipboard = this.copyHexToClipboard.bind(this);
     this.state = {
       hue: props.initialHue,
       saturation: props.initialSaturation,
@@ -32,8 +33,8 @@ export default class ColorInput extends Component {
     return (
       <div className="color-input">
         <div className="control-header">
-            <span class="selector-name">{this.props.target}</span>
-            <button className="hex" onClick={() => navigator.clipboard.writeText(this.state.hex)}>
+            <span className="selector-name">{this.props.target}</span>
+            <button className={`hex ${this.props.target}`} onClick={this.copyHexToClipboard}>
             {this.state.hex}
             </button>
         </div>
@@ -103,4 +104,13 @@ export default class ColorInput extends Component {
       formattedValue
     );
   }
+
+  copyHexToClipboard() {
+    const hexElement = document.getElementsByClassName(`hex ${this.props.target}`)[0];
+    const range = document.createRange();  
+    range.selectNode(hexElement);  
+    window.getSelection().addRange(range);
+
+    document.execCommand('copy');
+  };
 }

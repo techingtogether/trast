@@ -32,7 +32,7 @@ class App extends Component {
               width="0px"
               height="0px"
               viewBox="0 0 32 32"
-              enable-background="new 0 0 32 32"
+              enableBackground="new 0 0 32 32"
             >
               <path
                 id="half1"
@@ -69,10 +69,10 @@ class App extends Component {
             onColorChange={this.onTextColorChange}
           />
         </div>
-        <div className="footer">
+        <footer>
           Made with ♥ by <a href="https://www.zahratraboulsi.com">Zahra</a> and{" "}
           <a href="https://syeefkarim.com">Syeef</a>
-        </div>
+        </footer>
       </div>
     );
   }

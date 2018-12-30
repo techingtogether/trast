@@ -178,8 +178,8 @@ a {
   border-style: solid;
 }
 
-.footer {
-  background: var(--text-color-10);
+footer {
+  background: var(--bg-color);
   bottom: 0px;
   color: var(--text-color);
   font-size: 0.75em;
@@ -191,6 +191,17 @@ a {
   text-align: center;
   text-transform: uppercase;
   width: 100vw;
+}
+
+footer:after {
+  background: var(--text-color-10);
+  bottom: 0px;
+  left: 0px;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -10;
+  content: ''
 }
 
 @media (max-width: 600px) {
