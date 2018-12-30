@@ -113,12 +113,14 @@ class App extends Component {
   getRandomPangram() {
     const pangrams = [
       "How quickly daft jumping zebras vex.",
-      "Go, lazy fat vixen; be shrewd, jump quick.",
+      "Zephyrs may blow five tjalks during a coming equinox.",
+      "Quickly juxtapose fonts with varied z-heights, maybe?",
+      "Nix the vectorized artwork files, just use bitmaps quite sparingly.",
       "Fix problems quickly with galvanized jets.",
       "Pack my red box with five dozen quality jugs."
     ];
 
-    const pangramIndex = Math.round(Math.random() * 3);
+    const pangramIndex = Math.round(Math.random() * (pangrams.length-1));
     return pangrams[pangramIndex];
   }
 }
