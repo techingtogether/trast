@@ -71,7 +71,7 @@ class App extends Component {
         </div>
         <footer>
           Made with ♥ by <a href="https://www.zahratraboulsi.com">Zahra</a> and{" "}
-          <a href="https://syeefkarim.com">Syeef</a>
+          <a href="https://syeefkarim.com">Syeef</a> for <a href="https://www.techingtogether.com">Teching Together</a>.
         </footer>
       </div>
     );
