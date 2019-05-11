@@ -58,14 +58,14 @@ class App extends Component {
             target="background"
             initialHue={0}
             initialSaturation={50}
-            initialBrightness={0}
+            initialLightness={0}
             onColorChange={this.onBackgroundColorChange}
           />
           <ColorInput
             target="text"
             initialHue={0}
             initialSaturation={50}
-            initialBrightness={100}
+            initialLightness={100}
             onColorChange={this.onTextColorChange}
           />
         </div>

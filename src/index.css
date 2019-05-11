@@ -3,23 +3,23 @@
   --text-color: hsl(
     var(--text_hue),
     var(--text_saturation),
-    var(--text_brightness)
+    var(--text_lightness)
   );
   --bg-color: hsl(
     var(--background_hue),
     var(--background_saturation),
-    var(--background_brightness)
+    var(--background_lightness)
   );
   --text-color-10: hsla(
     var(--text_hue),
     var(--text_saturation),
-    var(--text_brightness),
+    var(--text_lightness),
     0.1
   );
   --text-color-30: hsla(
     var(--text_hue),
     var(--text_saturation),
-    var(--text_brightness),
+    var(--text_lightness),
     0.3
   );
 }
@@ -162,7 +162,7 @@ a {
   background-color: hsla(
     var(--text_hue),
     var(--text_saturation),
-    var(--text_brightness),
+    var(--text_lightness),
     0.2
   );
 }

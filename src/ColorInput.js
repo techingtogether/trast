@@ -9,11 +9,11 @@ export default class ColorInput extends Component {
     this.state = {
       hue: props.initialHue,
       saturation: props.initialSaturation,
-      brightness: props.initialBrightness,
+      lightness: props.initialLightness,
       hex: hslToHex(
         props.initialHue,
         props.initialSaturation,
-        props.initialBrightness
+        props.initialLightness
       )
     };
 
@@ -24,8 +24,8 @@ export default class ColorInput extends Component {
       `${props.initialSaturation}%`
     );
     stylesheet.setProperty(
-      `--${props.target}_brightness`,
-      `${props.initialBrightness}%`
+      `--${props.target}_lightness`,
+      `${props.initialLightness}%`
     );
   }
 
@@ -65,15 +65,15 @@ export default class ColorInput extends Component {
           />
         </div>
         <div className="control">
-          <label className="property">Brightness</label>
-          <label className="value">{this.state.brightness}</label>
+          <label className="property">Lightness</label>
+          <label className="value">{this.state.lightness}</label>
           <input
-            id="brightness"
-            name="brightness"
+            id="lightness"
+            name="lightness"
             type="range"
             min="0"
             max="100"
-            value={this.state.brightness}
+            value={this.state.lightness}
             onChange={this.changeHSL}
           />
         </div>
@@ -91,13 +91,13 @@ export default class ColorInput extends Component {
 
     const hue = id === "hue" ? value : this.state.hue;
     const saturation = id === "saturation" ? value : this.state.saturation;
-    const brightness = id === "brightness" ? value : this.state.brightness;
+    const lightness = id === "lightness" ? value : this.state.lightness;
 
-    const [r, g, b] = hslToRgb(hue, saturation, brightness);
+    const [r, g, b] = hslToRgb(hue, saturation, lightness);
 
     newState.hex = rgbToHex(r, g, b);
     this.setState(newState);
-    this.props.onColorChange(hue, saturation, brightness);
+    this.props.onColorChange(hue, saturation, lightness);
 
     document.documentElement.style.setProperty(
       `--${this.props.target}_${id}`,
