@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { hslToRgb, rgbToHex, hslToHex } from './ColorUtils.js';
+import { hslToRgb, rgbToHex, hslToHex, isValidHex, hexToHsl } from './ColorUtils.js';
 
 export default class ColorInput extends Component {
   constructor(props) {
     super();
-    this.changeHSL = this.changeHSL.bind(this);
+
+    this.changeHsl = this.changeHsl.bind(this);
+    this.changeHslFromText = this.changeHslFromText.bind(this);
     this.copyHexToClipboard = this.copyHexToClipboard.bind(this);
+
     this.state = {
       hue: props.initialHue,
       saturation: props.initialSaturation,
@@ -17,16 +20,9 @@ export default class ColorInput extends Component {
       )
     };
 
-    const stylesheet = document.documentElement.style;
-    stylesheet.setProperty(`--${props.target}_hue`, props.initialHue);
-    stylesheet.setProperty(
-      `--${props.target}_saturation`,
-      `${props.initialSaturation}%`
-    );
-    stylesheet.setProperty(
-      `--${props.target}_lightness`,
-      `${props.initialLightness}%`
-    );
+    this.setTargetProperty('hue', props.initialHue, props);
+    this.setTargetProperty('saturation', `${props.initialSaturation}%`, props);
+    this.setTargetProperty('lightness', `${props.initialLightness}%`, props);
   }
 
   render() {
@@ -34,9 +30,18 @@ export default class ColorInput extends Component {
       <div className="color-input">
         <div className="control-header">
             <span className="selector-name">{this.props.target}</span>
-            <button className={`hex ${this.props.target}`} onClick={this.copyHexToClipboard}>
-            {this.state.hex}
-            </button>
+            <div className="selector-input">
+              <input
+                className={`hex ${this.props.target}`}
+                value={this.state.hex}
+                size={7}
+                maxLength={7}
+                onChange={this.changeHslFromText}
+              />
+              <button className="clipboard" onClick={this.copyHexToClipboard}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 13h10v1h-10v-1zm15-11v22h-20v-22h3c1.229 0 2.18-1.084 3-2h8c.82.916 1.771 2 3 2h3zm-11 1c0 .552.448 1 1 1s1-.448 1-1-.448-1-1-1-1 .448-1 1zm9 15.135c-1.073 1.355-2.448 2.763-3.824 3.865h3.824v-3.865zm0-14.135h-4l-2 2h-3.898l-2.102-2h-4v18h7.362c4.156 0 2.638-6 2.638-6s6 1.65 6-2.457v-9.543zm-13 12h5v-1h-5v1zm0-4h10v-1h-10v1zm0-2h10v-1h-10v1z"/></svg>
+              </button>
+            </div>
         </div>
         <div className="control">
           <label className="property">Hue</label>
@@ -48,7 +53,7 @@ export default class ColorInput extends Component {
             min="0"
             max="360"
             value={this.state.hue}
-            onChange={this.changeHSL}
+            onChange={this.changeHsl}
           />
         </div>
         <div className="control">
@@ -61,7 +66,7 @@ export default class ColorInput extends Component {
             min="0"
             max="100"
             value={this.state.saturation}
-            onChange={this.changeHSL}
+            onChange={this.changeHsl}
           />
         </div>
         <div className="control">
@@ -74,14 +79,14 @@ export default class ColorInput extends Component {
             min="0"
             max="100"
             value={this.state.lightness}
-            onChange={this.changeHSL}
+            onChange={this.changeHsl}
           />
         </div>
       </div>
     );
   }
 
-  changeHSL(event) {
+  changeHsl(event) {
     let { value, id } = event.target;
     value = Number(value);
 
@@ -99,10 +104,34 @@ export default class ColorInput extends Component {
     this.setState(newState);
     this.props.onColorChange(hue, saturation, lightness);
 
-    document.documentElement.style.setProperty(
-      `--${this.props.target}_${id}`,
-      formattedValue
-    );
+    this.setTargetProperty(id, formattedValue);
+  }
+
+  changeHslFromText(event) {
+    let value = event.target.value;
+    const newState = {
+      hex: value
+    };
+
+    if (isValidHex(value)) {
+      if (!value.startsWith('#')) {
+        value = `#${value}`;
+      }
+
+      const [hue, saturation, lightness] = hexToHsl(value);
+
+      newState.hue = hue;
+      newState.saturation = saturation;
+      newState.lightness = lightness;
+
+      this.props.onColorChange(hue, saturation, lightness);
+
+      this.setTargetProperty('hue', hue);
+      this.setTargetProperty('saturation', `${saturation}%`);
+      this.setTargetProperty('lightness', `${lightness}%`);
+    }
+
+    this.setState(newState);
   }
 
   copyHexToClipboard() {
@@ -113,4 +142,11 @@ export default class ColorInput extends Component {
 
     document.execCommand('copy');
   };
+
+  setTargetProperty(id, value, props) {
+    document.documentElement.style.setProperty(
+      `--${props ? props.target : this.props.target}_${id}`,
+      value
+    );
+  }
 }
