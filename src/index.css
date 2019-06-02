@@ -10,6 +10,11 @@
     var(--background_saturation),
     var(--background_lightness)
   );
+  --text-color: hsl(
+    var(--text_hue),
+    var(--text_saturation),
+    var(--text_lightness)
+  );
   --text-color-10: hsla(
     var(--text_hue),
     var(--text_saturation),
@@ -100,10 +105,12 @@ a {
 .color-input {
   margin: 10px var(--left-margin);
   flex: 1;
+
 }
 
 .control-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
 }
@@ -153,15 +160,12 @@ a {
 
 .control-header input.hex {
   text-transform: uppercase;
-  text-align: center;
-}
-
-.control-header input.hex {
-  color: var(--text-color);
-  font-size: 0.75em;
+  font-size: 0.9em;
   border-color: transparent;
   border-radius: 5px;
   background-color: var(--text-color-10);
+  color: var(--text-color);
+  width: 8ch;
 }
 
 .control-header input.hex:hover {
