@@ -4,7 +4,7 @@ An interactive playground for picking color combinations 🎨
 ![A screenshot of Trast in action!](./screenshot.png)
 
 ### Running in development
-* Clone the repo: `git clone https://github.com/ZahraTee/trast.git`
+* Clone the repo: `git clone https://github.com/techingtogether/trast.git`
 * Open the directory: `cd trast`
 * Install dependencies: `npm install` or `yarn install`
 * Run the app: `npm run start` or `yarn start`
